@@ -1,0 +1,47 @@
+options:
+  log-level:
+    default: info
+    description: log level for the server
+    type: string
+  replication-factor:
+    default: 2
+    description: |
+      Number of data copies to keep.
+    type: int
+  short-shard-duration:
+    type: int
+    default: 64
+    description: |
+      Number of days to keep 'short term' shard data.
+  short-shard-splits:
+    type: int
+    default: 2
+    description: |
+      Number of splits have over the 'short term' shard.
+  long-shard-duration:
+    type: int
+    default: 356
+    description: |
+      Number of days to keep 'long term' shard data.
+  long-shard-splits:
+    type: int
+    default: 2
+    description: |
+      Number of splits have over the 'long term' shard.
+  admin-port:
+    default: 0
+    type: int
+    description: |
+      Which port is the admin user interface on. 0 disables (default)
+  graphite-tcp:
+    default: 2003
+    type: int
+    description: |
+      Which port is graphite tcp available on. 0 value disables.
+  graphite-udp:
+    default: 2004
+    type: int
+    description: |
+      Whick port is graphite udp vailable on. 0 value disables.
+      
+      

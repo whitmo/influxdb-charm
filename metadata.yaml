@@ -1,0 +1,16 @@
+name: influxdb
+summary: Scalable Time Series DB
+description: |
+  Scalable Time Series DB
+provides:
+  admin:
+    interface: http
+  query:
+    interface: influxdb-http
+  graphite-tcp:
+    interface: carbon-pickle
+  graphite-udp:
+    interface: carbon-pickle
+peers:
+  cluster:
+    interface: influxdb-cluster

@@ -1,0 +1,9 @@
+#!/usr/bin/python
+import subprocess
+from utils import read_config
+
+config = read_config()
+query_port = config.get('api', {}).get('port')
+
+if query_port:
+    subprocess.check_output(['relation-set', "http-port=%s" % port])

@@ -1,0 +1,37 @@
+#!/usr/bin/python
+import json
+import subprocess
+import sys
+
+from utils import read_config, write_config
+
+config = read_config()
+
+# Inform peer of our raft port
+raft_port = config.get('raft', {}).get('port')
+subprocess.check_output([
+    'relation-set', 'raft-port=%s' % str(raft_port)])
+
+# Get the peer info
+data = json.loads(
+    subprocess.check_output(['relation-get', '--format=json']))
+
+# Peer hasn't set its relation data yet, exit, we'll be called again.
+if not 'raft-port' in data:
+    sys.exit(0)
+
+# Get the current set of seeds
+cluster_servers = config.get('cluster').get('seed-servers', [])
+
+# We only need 3 seeds (introducers)
+if len(cluster_servers) > 3:
+    sys.exit(0)
+
+# Add the new seed if we don't already have it yet.
+seed = "%s:%s" % (data['private-address'], data['raft-port'])
+if seed in cluster_servers:
+    sys.exit(0)
+
+cluster_servers.append(seed)
+write_config(cluster_servers)
+

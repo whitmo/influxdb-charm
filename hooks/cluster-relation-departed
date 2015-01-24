@@ -1,0 +1,33 @@
+#!/usr/bin/python
+import json
+import subprocess
+
+from utils import read_config
+
+config = read_config()
+
+peer_data = json.loads(subprocess.check_output(
+    ['relation-get', '--format=json']))
+
+print("peer data")
+print(peer_data)
+print("")
+
+print("list of peers")
+peers = json.loads(subprocess.check_output(
+    ['relation-list', '--format=json']))
+print("peers")
+
+seed = "%s:%s" % (peer_data['private-address'], peer_data['raft-port'])
+
+cluster_servers = config.get('cluster').get('seed-servers')
+if not cluster_servers:
+    sys.exit(0)
+
+if not seed in cluster_servers:
+    sys.exit(0)
+
+# TODO find additional servers if extant to fill out seed quorum.
+cluster_servers.remove(seed)
+write_config(cluster_servers)
+
