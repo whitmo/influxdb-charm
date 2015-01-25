@@ -7,10 +7,8 @@ provides:
     interface: http
   query:
     interface: influxdb-http
-  graphite-tcp:
-    interface: carbon-pickle
-  graphite-udp:
-    interface: carbon-pickle
+  schema_in:
+    interface: influxdb-http
 peers:
   cluster:
     interface: influxdb-cluster

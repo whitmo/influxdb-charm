@@ -1,4 +1,4 @@
-#/usr/bin/python
+#!/usr/bin/python
 import subprocess
 import sys
 
@@ -16,4 +16,3 @@ if admin_port is None:
 
 subprocess.check_output([
     'relation-set', "port=%s" % str(port), "hostname=%s" % address])
-

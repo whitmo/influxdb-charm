@@ -1,0 +1,20 @@
+#!/usr/bin/python
+
+import subprocess
+from utils import read_config
+
+
+def main():
+    config = read_config()
+    api_port = config.get('api', {}).get('port')
+
+    address = subprocess.check_output([
+        'unit-get', 'public-address']).strip()
+
+    if api_port:
+        subprocess.check_output(['relation-set',
+                                "http-port=%s" % api_port,
+                                "hostname=%s" % address])
+
+if __name__ == "__main__":
+    main()
